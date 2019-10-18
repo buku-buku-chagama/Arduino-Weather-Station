@@ -84,7 +84,7 @@ void setup() {
 void loop() {
     // wait for WiFi connection
     int spamDelay = 1000 * 60 * 30;
-    String temp; // , temp1;
+    String temp;
     String cardinal[] = {"N", "NE", "E", "SE", "S", "SW", "W", "NW", "N"}; 
     lex = "";
     if((wifiMulti.run() == WL_CONNECTED)) {
@@ -111,21 +111,25 @@ void loop() {
                 endPos = payload.indexOf("</code>",startPos + 1);
                 String packet  = payload.substring(startPos + 6, endPos);
                 float tempDec, tempF, windDir, windSpd;                
-
+                // Parse Packet
                 for(unsigned int i = 0; i < packet.length(); i++)
                 {
                     lex = lex + packet[i];
+                    // Parse AirTemp and Dewpoint
                     if(packet[i] == ' ' || i == packet.length() - 1) {
                       if (lex[0]=='T'){
                         curWeather. airTemp = lex.substring(1,5);
                         curWeather. dewPoint = lex.substring(5,lex.length());
                       }
+                      // Parse Barometric Pressure
                       if (lex[0]=='A' && lex.length() > 4){
                         curWeather.baro = lex.substring(1,5);
                       }
+                      // Parse whatever this is
                       if (lex[lex.length()-2] == 'Z'){
                         curWeather.datum = lex.substring(0,6);
                       }
+                      // Parse WindSpeed and Direction
                       if (lex[lex.length()-3] == 'K' && lex[lex.length()-2] == 'T'){
                         curWeather.windDir = lex.substring(0,3);
                         curWeather.windSpd = lex.substring(3,5);
@@ -133,7 +137,8 @@ void loop() {
                       lex = "";
                     }
                   }
-
+                
+                // Do Conversions
                 temp = curWeather.airTemp;              
                 
                 tempDec = str2Float(curWeather.airTemp.substring(1,3)) * (-((int)(temp[0] == '1')) + ((int)(temp[0] == '0')));
@@ -158,7 +163,6 @@ void loop() {
             display.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
             display.drawLogBuffer(0, 0);
             display.display();
-            spamDelay = 5000;
         }
 
         http.end();
