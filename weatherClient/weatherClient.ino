@@ -76,8 +76,9 @@ void setup() {
         USE_SERIAL.flush();
         delay(1000);
     }
-
-    wifiMulti.addAP("WIFI", "PASSWORD");
+    
+    // Change these to match your SSID and Password
+    wifiMulti.addAP("WIFI SSID", "PASSWORD");
 
 }
 
