@@ -83,7 +83,7 @@ void setup() {
 
 void loop() {
     // wait for WiFi connection
-    int spamDelay = 1000 * 60 * 5;
+    int spamDelay = 1000 * 60 * 30;
     String temp; // , temp1;
     String cardinal[] = {"N", "NE", "E", "SE", "S", "SW", "W", "NW", "N"}; 
     lex = "";
