@@ -7,5 +7,5 @@ Find out your local weather station's four letter ID. It can be found on "https:
 In line that contains :
 
 http.begin("https://www.aviationweather.gov/taf/data?ids=KSJT&format=raw&metars=on&layout=off")
-                                                         ^^^^
-                                      Replace this with your local weather station ID.
+
+Replace "KSJT" with your local weather station ID.
